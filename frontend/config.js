@@ -1,3 +1,3 @@
 window.BUFU_CONFIG = {
-  apiBase: "https://bufu-api.ofcnitin.workers.dev",
+  apiBase: "https://bufu.ofcnitin.workers.dev",
 };
