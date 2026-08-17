@@ -577,7 +577,7 @@ function wireReader(t, chapter, mode, pages){
 
 // ── Auth modal ──────────────────────────────────────────────────────
 function authModal(mode='login'){
-  return `<div class="modal-overlay" data-action="close-modal"><div class="modal-card" onclick="event.stopPropagation()">
+  return `<div class="modal-overlay" data-action="close-modal"><div class="modal-card">
     <div class="modal-head"><h3>${mode==='login'?'Sign in to BUFU':'Create your BUFU account'}</h3><button class="modal-close" data-action="close-modal" aria-label="Close">✕</button></div>
     <form id="auth-form">
       ${mode==='register'?'<label>Display name<input name="displayName" type="text" maxlength="60" placeholder="Reader"></label>':''}
