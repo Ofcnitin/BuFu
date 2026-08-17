@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070709" />
+    <!-- Defense-in-depth against XSS reaching the bearer token in
+         localStorage (see README's "Session security"): no inline
+         scripts, no eval, scripts/connections restricted to same-origin
+         plus the providers BUFU actually talks to. Images are wide open
+         (any https: host) because cover art is hotlinked from whichever
+         provider supplied it. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" />
+    <meta name="description" content="BUFU — a unified manga, manhwa and manhua reading experience." />
+    <title>BUFU — Read beyond worlds</title>
+    <link rel="icon" href="./assets/bufu-mark.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="toast-root" aria-live="polite" aria-atomic="true"></div>
+    <div id="modal-root"></div>
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

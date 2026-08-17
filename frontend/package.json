@@ -1,0 +1,12 @@
+{
+  "name": "bufu-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "BUFU frontend — plain static HTML/CSS/JS, deliberately no build step or framework for a GitHub Pages deployment.",
+  "scripts": {
+    "dev": "echo 'Static frontend — serve ./frontend with any static file server, e.g. npx serve frontend' && exit 0",
+    "build": "echo 'No build step: frontend is plain static HTML/CSS/JS, deployed as-is.' && exit 0",
+    "typecheck": "echo 'No TypeScript in frontend/ — nothing to typecheck.' && exit 0",
+    "preview": "npx --yes serve frontend"
+  }
+}
