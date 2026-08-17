@@ -62,7 +62,7 @@ async function apiFetch(path, options={}){
   if(options.body && !headers['Content-Type']) headers['Content-Type']='application/json';
   if(state.auth?.token) headers.Authorization=`Bearer ${state.auth.token}`;
   const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),12000);
+  const timeout=setTimeout(()=>controller.abort(),20000);
   let res;
   try{
     res=await fetch(base+path,{...options,headers,signal:controller.signal});
