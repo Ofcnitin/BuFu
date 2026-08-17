@@ -5,8 +5,8 @@ workers_dev = true
 
 [[d1_databases]]
 binding = "DB"
-database_name = "bufu"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_name = "bufu-db"
+database_id = "4dfec9f0-fc3d-405b-939f-a42e0383c524"
 migrations_dir = "migrations"
 
 [vars]
