@@ -109,16 +109,29 @@ export async function recommendations(env: Env, category = 'action'): Promise<Re
   const seeds = shiroSeeds.slice(0, 8);
   const enrichedSeeds: ProviderTitle[] = new Array(seeds.length);
   const enrichOne = async (seed: ProviderTitle, i: number) => {
-    if (jikan?.search) {
-      try {
-        const matches = await jikan.search(env, seed.title);
-        const exact = matches.find(m => m.title.toLowerCase() === seed.title.toLowerCase());
-        enrichedSeeds[i] = exact || seed;
-        return;
-      } catch { /* fall through to bare seed */ }
-    }
+  // SHIRO recommendations are already enriched against MangaDex in
+  // shiro.ts when a matching title is found.
+  // Only use Jikan as a fallback for seeds that still have no cover.
+  if (seed.cover || seed.sourceId !== 'shiro') {
     enrichedSeeds[i] = seed;
-  };
+    return;
+  }
+
+  if (jikan?.search) {
+    try {
+      const matches = await jikan.search(env, seed.title);
+      const exact = matches.find(
+        m => m.title.toLowerCase() === seed.title.toLowerCase()
+      );
+      enrichedSeeds[i] = exact || seed;
+      return;
+    } catch {
+      /* fall through to bare seed */
+    }
+  }
+
+  enrichedSeeds[i] = seed;
+};
   const runPool = async () => {
     let next = 0;
     const workers = Array.from({ length: Math.min(ENRICH_CONCURRENCY, seeds.length) }, async () => {
