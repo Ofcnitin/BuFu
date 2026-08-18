@@ -285,13 +285,27 @@ async function fetchPages(titleId, chapterId){
   return value;
 }
 async function loadHomeFeed(){
-  if(state.home.loaded || state.home.loading) return;
-  state.home.loading=true;
-  const r=await apiFetch('/api/recommendations?category=action');
-  state.home.loading=false;
-  if(r.ok){ state.home={loaded:true, loading:false, items:r.data.results||[], error:null}; }
-  else { state.home={loaded:true, loading:false, items:[], error:r.error}; }
-  if(currentPath()==='/'||currentPath()==='') render();
+  if(r.ok){
+  state.home={
+    loaded:true,
+    loading:false,
+    items:r.data.results||[],
+    error:null
+  };
+}else{
+  state.home={
+    loaded:true,
+    loading:false,
+    items:[],
+    error:r.error
+  };
+}
+
+if(currentPath()==='/'||currentPath()==='') render();
+
+if(typeof finishSplash === 'function'){
+  finishSplash();
+}
 }
 async function runSearch(q){
   if(!q.trim()) return;
