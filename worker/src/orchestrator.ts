@@ -146,14 +146,29 @@ export async function recommendations(env: Env, category = 'action'): Promise<Re
   // Anything the deadline cut off still has its bare seed as a fallback.
   for (let i = 0; i < seeds.length; i++) if (!enrichedSeeds[i]) enrichedSeeds[i] = seeds[i];
 
-  const seen = new Map<string, CanonicalTitle>();
-  for (const p of [...enrichedSeeds, ...anilistTop, ...jikanTop]) {
+  const allProviders = [...enrichedSeeds, ...anilistTop, ...jikanTop];
+
+const canonicalResults = await Promise.all(
+  allProviders.map(async p => {
     try {
-      const canonical = await canonicalizeTitle(env, p);
-      seen.set(canonical.id, canonical);
-    } catch { /* skip unmatchable record */ }
-  }
-  const ranked = [...seen.values()].sort((a, b) => ((b.popularity || 0) + (b.score || 0) * 1000) - ((a.popularity || 0) + (a.score || 0) * 1000));
+      return await canonicalizeTitle(env, p);
+    } catch {
+      return null;
+    }
+  })
+);
+
+const seen = new Map<string, CanonicalTitle>();
+
+for (const canonical of canonicalResults) {
+  if (canonical) seen.set(canonical.id, canonical);
+}
+
+const ranked = [...seen.values()].sort(
+  (a, b) =>
+    ((b.popularity || 0) + (b.score || 0) * 1000) -
+    ((a.popularity || 0) + (a.score || 0) * 1000)
+);
   return ranked.slice(0, 24).map(toWire);
 }
 
