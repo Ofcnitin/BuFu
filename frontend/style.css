@@ -179,3 +179,55 @@ html[data-theme="light"] .reader-shell, html[data-theme="light"] .reader-main { 
 .chip-select{display:flex;gap:8px;flex-wrap:wrap}
 .chip-select button{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel-2);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer}
 .chip-select button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+/* ── BUFU startup splash ─────────────────────────────────────────── */
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #070709;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#splash.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-logo {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-logo img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+}
+
+.splash-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.08);
+  border-top-color: rgba(255,255,255,0.95);
+  border-right-color: rgba(255,255,255,0.55);
+  animation: bufuSplashSpin 1.25s linear infinite;
+}
+
+@keyframes bufuSplashSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
