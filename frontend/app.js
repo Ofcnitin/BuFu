@@ -677,7 +677,31 @@ function handleAction(e){
   if(a==='retry-chapters'){ state.chaptersCache.delete(e.currentTarget.dataset.titleId); render(); }
   if(a==='retry-pages'){ state.pagesCache.delete(`${e.currentTarget.dataset.titleId}|${e.currentTarget.dataset.chapterId}`); render(); }
 }
+function hideSplash(){
+  const splash = document.getElementById('splash');
+  if(!splash) return;
+  splash.classList.add('hidden');
+  setTimeout(() => splash.remove(), 500);
+}
+
 window.addEventListener('hashchange',render);
 applyTheme();
 render();
 restoreSession();
+
+// Reveal BUFU when the initial Home load finishes,
+// but never keep the splash longer than 5 seconds.
+let splashHidden = false;
+
+function finishSplash(){
+  if(splashHidden) return;
+  splashHidden = true;
+  hideSplash();
+}
+
+const splashTimeout = setTimeout(finishSplash, 5000);
+
+if(state.home.loaded){
+  clearTimeout(splashTimeout);
+  finishSplash();
+}
