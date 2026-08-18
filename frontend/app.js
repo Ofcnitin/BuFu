@@ -285,27 +285,39 @@ async function fetchPages(titleId, chapterId){
   return value;
 }
 async function loadHomeFeed(){
+  if(state.home.loading) return;
+
+  state.home.loading = true;
+
+  if(currentPath()==='/' || currentPath()===''){
+    render();
+  }
+
+  const r = await apiFetch('/api/home');
+
   if(r.ok){
-  state.home={
-    loaded:true,
-    loading:false,
-    items:r.data.results||[],
-    error:null
-  };
-}else{
-  state.home={
-    loaded:true,
-    loading:false,
-    items:[],
-    error:r.error
-  };
-}
+    state.home = {
+      loaded: true,
+      loading: false,
+      items: r.data.results || [],
+      error: null
+    };
+  }else{
+    state.home = {
+      loaded: true,
+      loading: false,
+      items: [],
+      error: r.error
+    };
+  }
 
-if(currentPath()==='/'||currentPath()==='') render();
+  if(currentPath()==='/' || currentPath()===''){
+    render();
+  }
 
-if(typeof finishSplash === 'function'){
-  finishSplash();
-}
+  if(typeof finishSplash === 'function'){
+    finishSplash();
+  }
 }
 async function runSearch(q){
   if(!q.trim()) return;
