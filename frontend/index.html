@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#15100d" />
+    <!-- Defense-in-depth against XSS reaching the bearer token in
+         localStorage (see README's "Session security"): no inline or
+         third-party scripts at all. style-src still needs 'unsafe-inline'
+         for legitimate per-element dynamic styles this app actually uses
+         (progress-bar widths, per-card aspect ratios) — those are data
+         values, not a fixed set of classes a static stylesheet can express,
+         so there's no safe way to precompile them away. Images are wide
+         open (any https: host) because cover art is hotlinked from
+         whichever provider supplied it. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" />
+    <meta name="description" content="BUFU — a unified manga, manhwa and manhua reading experience." />
+    <title>BUFU — Read beyond worlds</title>
+    <link rel="icon" href="./assets/bufu-mark.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <!-- "Ethereal Reader" design system: Tailwind, precompiled to a static
+         stylesheet (tailwind.css) at build time from tailwind.config.js —
+         not the Play CDN. Same exact design tokens as the Stitch mockups,
+         but no runtime JIT script, no cdn.tailwindcss.com dependency, and
+         no 'unsafe-inline' needed for script-src (see the CSP above and
+         BUILD.md for how to regenerate it after adding new classes). -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+    <div id="splash">
+  <div class="splash-logo">
+    <img src="./assets/bufu-mark.png" alt="BUFU">
+    <div class="splash-ring"></div>
+  </div>
+</div>
+
+<div id="app"></div>
+    <div id="toast-root" aria-live="polite" aria-atomic="true"></div>
+    <div id="modal-root"></div>
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "BUFU — Read beyond worlds",
+  "short_name": "BUFU",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "description": "A unified manga, manhwa and manhua reading experience.",
+  "icons": [{"src":"./assets/bufu-mark.png","sizes":"any","type":"image/png","purpose":"any maskable"}]
+}
