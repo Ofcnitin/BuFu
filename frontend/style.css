@@ -58,7 +58,7 @@ img { max-width: 100%; display: block; }
 /* ── Reader: fixed near-black canvas regardless of theme ── */
 .reader-shell { background: #000; }
 .reader-main { -webkit-overflow-scrolling: touch; }
-.reader-page-wrap + .reader-page-wrap { margin-top: 8px; }
+.reader-page-wrap + .reader-page-wrap { margin-top: 0; }
 
 /* ── Startup splash (brand-fixed near-black) ── */
 #splash {
