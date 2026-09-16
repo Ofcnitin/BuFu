@@ -1,4 +1,4 @@
-import { throttle } from './adapters/ratelimit';
+import { throttle } from './ratelimit';
 
 export function json(data: unknown, init: ResponseInit = {}): Response {
   return new Response(JSON.stringify(data), {
